@@ -68,9 +68,9 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-transparent text-zinc-100 flex flex-col items-center selection:bg-indigo-500/30">
       {/* Header */}
-      <header className="w-full py-4 px-8 flex items-center justify-between bg-zinc-950/50 border-b border-zinc-900/50 backdrop-blur-sm z-10">
+      <header className="w-full py-4 px-8 flex items-center justify-between bg-zinc-950/10 border-b border-white/5 backdrop-blur-sm z-10">
         <div className="flex items-center gap-8">
           <Logo className="h-10 hover:scale-105 transition-transform duration-500" />
           <p className="hidden sm:flex text-zinc-500 text-[10px] font-bold tracking-[0.5em] uppercase border-l border-zinc-800/50 pl-8 h-5 items-center">
