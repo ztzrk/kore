@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import AlgorithmSelect from './AlgorithmSelect';
+
 interface ControlsProps {
   onRandomize: () => void;
   onStart: () => void;
@@ -28,7 +30,7 @@ const Controls: React.FC<ControlsProps> = ({
   onAlgorithmChange,
 }) => {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-8 px-8 py-6 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl backdrop-blur-sm">
+    <div className="relative z-20 flex flex-wrap items-center justify-center gap-8 px-8 py-6 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl backdrop-blur-sm">
       {/* Action Buttons */}
       <div className="flex gap-4">
         <button
@@ -70,7 +72,7 @@ const Controls: React.FC<ControlsProps> = ({
             value={size}
             onChange={(e) => onSizeChange(parseInt(e.target.value))}
             disabled={isRunning}
-            className="w-full accent-indigo-500 h-1 bg-zinc-800 rounded-lg cursor-pointer"
+            className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-indigo-500 border border-zinc-700/30"
           />
         </div>
 
@@ -85,46 +87,21 @@ const Controls: React.FC<ControlsProps> = ({
             step="1"
             value={speed}
             onChange={(e) => onSpeedChange(parseInt(e.target.value))}
-            className="w-full accent-indigo-500 h-1 bg-zinc-800 rounded-lg cursor-pointer"
+            className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-pink-500 border border-zinc-700/30"
           />
         </div>
       </div>
 
       {/* Algorithm Selector */}
-      <div className="flex flex-col gap-2 min-w-[180px]">
+      <div className="flex flex-col gap-2 min-w-[220px]">
         <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold px-1">
-          Algorithm
+          Select Choreography
         </label>
-        <select
+        <AlgorithmSelect
           value={algorithm}
-          onChange={(e) => onAlgorithmChange(e.target.value)}
+          onChange={onAlgorithmChange}
           disabled={isRunning}
-          className="bg-zinc-800 text-zinc-200 text-sm px-4 py-2 rounded-lg border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer"
-        >
-          <optgroup label="Simple Sorts">
-            <option value="Bubble Sort">Bubble Sort</option>
-            <option value="Selection Sort">Selection Sort</option>
-            <option value="Insertion Sort">Insertion Sort</option>
-          </optgroup>
-          <optgroup label="Efficient Sorts">
-            <option value="Quick Sort">Quick Sort</option>
-            <option value="Merge Sort">Merge Sort</option>
-            <option value="Heap Sort">Heap Sort</option>
-          </optgroup>
-          <optgroup label="Distribution Sorts">
-            <option value="Counting Sort">Counting Sort</option>
-            <option value="Radix Sort">Radix Sort</option>
-            <option value="Bucket Sort">Bucket Sort</option>
-          </optgroup>
-          <optgroup label="Exotic Sorts">
-            <option value="Shell Sort">Shell Sort</option>
-            <option value="Cocktail Shaker Sort">Cocktail Shaker Sort</option>
-            <option value="Comb Sort">Comb Sort</option>
-          </optgroup>
-          <optgroup label="Fun Sorts">
-            <option value="Bogo Sort">Bogo Sort</option>
-          </optgroup>
-        </select>
+        />
       </div>
     </div>
   );

@@ -68,7 +68,7 @@ export default function Home() {
     };
 
     return (
-        <main className="min-h-screen bg-transparent text-zinc-100 flex flex-col items-center selection:bg-indigo-500/30">
+        <main className="h-screen max-h-screen overflow-hidden bg-transparent text-zinc-100 flex flex-col items-center selection:bg-indigo-500/30">
             {/* Header */}
             <header className="w-full py-4 px-8 flex items-center justify-between bg-zinc-950/10 border-b border-white/5 backdrop-blur-sm z-10">
                 <div className="flex items-center gap-8">
