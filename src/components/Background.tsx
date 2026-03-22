@@ -33,7 +33,7 @@ export default function Background() {
     let animationFrameId: number;
     let particles: Particle[] = [];
     let streaks: Streak[] = [];
-    const particleCount = 60;
+    const particleCount = 80;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -47,33 +47,34 @@ export default function Background() {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          size: Math.random() * 2 + 1,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          size: Math.random() * 2.5 + 1.5,
           color: Math.random() > 0.5 ? '#6366f1' : '#ec4899',
         });
       }
     };
 
     const createStreak = () => {
-      if (Math.random() > 0.98) {
+      if (Math.random() > 0.97) {
         streaks.push({
-          x: -200,
+          x: -300,
           y: Math.random() * canvas.height,
-          length: Math.random() * 100 + 50,
-          speed: Math.random() * 10 + 5,
+          length: Math.random() * 200 + 100,
+          speed: Math.random() * 12 + 6,
           color: Math.random() > 0.5 ? '#6366f1' : '#ec4899',
         });
       }
     };
 
-    const draw = () => {
+    const draw = (time: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Draw subtle grid
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.02)';
+      // Draw dynamic grid
+      const pulse = Math.sin(time / 2000) * 0.01 + 0.02;
+      ctx.strokeStyle = `rgba(255, 255, 255, ${pulse})`;
       ctx.lineWidth = 1;
-      const gridSize = 100;
+      const gridSize = 120;
       for (let x = 0; x < canvas.width; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
@@ -89,19 +90,22 @@ export default function Background() {
 
       // Handle Streaks
       createStreak();
-      streaks = streaks.filter(s => s.x < canvas.width + 200);
+      streaks = streaks.filter(s => s.x < canvas.width + 300);
       streaks.forEach(s => {
         s.x += s.speed;
         const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.length, s.y);
         grad.addColorStop(0, s.color);
         grad.addColorStop(1, 'transparent');
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = s.color;
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 1.5;
-        ctx.globalAlpha = 0.3;
+        ctx.lineWidth = 2;
+        ctx.globalAlpha = 0.5;
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(s.x - s.length, s.y);
         ctx.stroke();
+        ctx.shadowBlur = 0;
       });
 
       // Handle Particles
@@ -114,10 +118,10 @@ export default function Background() {
         const dx = mouseRef.current.x - p.x;
         const dy = mouseRef.current.y - p.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          const force = (150 - dist) / 150;
-          p.x -= dx * force * 0.02;
-          p.y -= dy * force * 0.02;
+        if (dist < 200) {
+          const force = (200 - dist) / 200;
+          p.x -= dx * force * 0.03;
+          p.y -= dy * force * 0.03;
         }
 
         // Wrap around
@@ -130,20 +134,23 @@ export default function Background() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.globalAlpha = 0.15;
+        ctx.globalAlpha = 0.3;
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = p.color;
         ctx.fill();
+        ctx.shadowBlur = 0;
         
         // Draw connections
         particles.forEach((p2) => {
           const dx = p.x - p2.x;
           const dy = p.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 150) {
+          if (dist < 180) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = p.color;
-            ctx.globalAlpha = (150 - dist) / 150 * 0.05;
+            ctx.globalAlpha = (180 - dist) / 180 * 0.12;
             ctx.stroke();
           }
         });
@@ -158,7 +165,7 @@ export default function Background() {
     });
 
     resize();
-    draw();
+    draw(0);
 
     return () => {
       window.removeEventListener('resize', resize);
