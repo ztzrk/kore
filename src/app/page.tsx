@@ -19,6 +19,7 @@ import { radixSort } from '@/utils/algorithms/radixSort';
 import { bucketSort } from '@/utils/algorithms/bucketSort';
 import { bogoSort } from '@/utils/algorithms/bogoSort';
 import { algorithmsData } from '@/data/algorithms';
+import Logo from '@/components/ui/Logo';
 import AlgorithmInfo from '@/components/AlgorithmInfo';
 
 export default function Home() {
@@ -69,13 +70,25 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center selection:bg-indigo-500/30">
       {/* Header */}
-      <header className="w-full py-4 text-center bg-zinc-950/50 border-b border-zinc-900/50 backdrop-blur-sm z-10">
-        <h1 className="text-4xl font-extrabold tracking-tighter bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent italic">
-          KORE
-        </h1>
-        <p className="text-zinc-500 text-sm font-medium tracking-[0.2em] mt-1">
-          THE CHOREOGRAPHY OF DATA
-        </p>
+      <header className="w-full py-4 px-8 flex items-center justify-between bg-zinc-950/50 border-b border-zinc-900/50 backdrop-blur-sm z-10">
+        <div className="flex items-center gap-8">
+          <Logo className="h-10 hover:scale-105 transition-transform duration-500" />
+          <p className="hidden sm:flex text-zinc-500 text-[10px] font-bold tracking-[0.5em] uppercase border-l border-zinc-800/50 pl-8 h-5 items-center">
+            The choreography of data
+          </p>
+        </div>
+        
+        <div className="hidden md:flex items-center gap-6">
+          <div className="flex flex-col items-end">
+            <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest leading-none mb-1">Status</span>
+            <div className="flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full ${isRunning ? 'bg-indigo-500 animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.6)]' : 'bg-zinc-700'}`} />
+              <span className="text-xs font-mono font-bold text-zinc-400">
+                {isRunning ? 'RUNNING' : 'IDLE'}
+              </span>
+            </div>
+          </div>
+        </div>
       </header>
 
       {/* Main Content */}

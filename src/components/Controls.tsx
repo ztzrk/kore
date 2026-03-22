@@ -34,14 +34,14 @@ const Controls: React.FC<ControlsProps> = ({
         <button
           onClick={onRandomize}
           disabled={isRunning}
-          className="px-6 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-sm text-zinc-100 active:scale-95"
+          className="px-6 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium text-xs text-zinc-300 active:scale-95 border border-zinc-700/50"
         >
-          Generate New Array
+          Generate New
         </button>
         {isRunning ? (
           <button
             onClick={onStop}
-            className="px-6 py-2.5 rounded-lg bg-red-600 hover:bg-red-500 transition-all font-semibold text-sm text-white shadow-lg shadow-red-500/20 active:scale-95 border border-red-500/50"
+            className="px-6 py-2.5 rounded-lg bg-pink-600 hover:bg-pink-500 transition-all font-bold text-xs text-white shadow-lg shadow-pink-500/20 active:scale-95 border border-pink-400/50"
           >
             Cancel Sorting
           </button>
@@ -49,7 +49,7 @@ const Controls: React.FC<ControlsProps> = ({
           <button
             onClick={onStart}
             disabled={isRunning}
-            className="px-6 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-semibold text-sm text-white shadow-lg shadow-indigo-500/20 active:scale-95 border border-indigo-500/50"
+            className="px-6 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-bold text-xs text-white shadow-lg shadow-indigo-500/20 active:scale-95 border border-indigo-400/50"
           >
             Start {algorithm}
           </button>
@@ -57,9 +57,9 @@ const Controls: React.FC<ControlsProps> = ({
       </div>
 
       {/* Sliders */}
-      <div className="flex gap-8">
-        <div className="flex flex-col gap-2 min-w-[140px]">
-          <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold px-1">
+      <div className="flex gap-6">
+        <div className="flex flex-col gap-1.5 min-w-[120px]">
+          <label className="text-[9px] uppercase tracking-widest text-zinc-500 font-bold px-1">
             Array Size
           </label>
           <input
@@ -74,8 +74,8 @@ const Controls: React.FC<ControlsProps> = ({
           />
         </div>
 
-        <div className="flex flex-col gap-2 min-w-[140px]">
-          <label className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold px-1">
+        <div className="flex flex-col gap-1.5 min-w-[120px]">
+          <label className="text-[9px] uppercase tracking-widest text-zinc-500 font-bold px-1">
             Speed
           </label>
           <input
