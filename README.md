@@ -2,6 +2,8 @@
 
 **Kore** is a premium, highly interactive sorting algorithm visualizer built for the modern web. Inspired by the fluid motion of data, it transforms abstract logic into a vibrant "choreography" using a sleek **Cyber Neon** aesthetic.
 
+**Live Demo**: [https://kore-omega.vercel.app/](https://kore-omega.vercel.app/)
+
 ## Final Project State
 
 ![Kore Interface](public/screenshot.png)
