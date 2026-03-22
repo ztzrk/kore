@@ -20,19 +20,32 @@ export const useSorting = ({
   
   const animationsRef = useRef<AnimationStep[]>([]);
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
+  const isRunningRef = useRef(false);
+  const speedRef = useRef(initialSpeed);
 
-  const resetArray = useCallback((size: number = initialSize) => {
+  // Sync speed state to ref for real-time access in the loop
+  useEffect(() => {
+    speedRef.current = speed;
+  }, [speed]);
+
+  const stopSorting = useCallback(() => {
     if (timeoutIdRef.current) {
       clearTimeout(timeoutIdRef.current);
+      timeoutIdRef.current = null;
     }
-    const newArray = generateRandomArray(size, 10, 500);
-    setArray(newArray);
+    isRunningRef.current = false;
+    setIsRunning(false);
     setComparing([]);
     setSwapping([]);
-    setSorted([]);
-    setIsRunning(false);
     animationsRef.current = [];
-  }, [initialSize]);
+  }, []);
+
+  const resetArray = useCallback((size: number = initialSize) => {
+    stopSorting();
+    const newArray = generateRandomArray(size, 10, 500);
+    setArray(newArray);
+    setSorted([]);
+  }, [initialSize, stopSorting]);
 
   useEffect(() => {
     resetArray();
@@ -42,16 +55,16 @@ export const useSorting = ({
   }, [resetArray]);
 
   const playAnimations = useCallback(() => {
-    if (animationsRef.current.length === 0) {
+    if (!isRunningRef.current || animationsRef.current.length === 0) {
       setIsRunning(false);
+      isRunningRef.current = false;
       setComparing([]);
       setSwapping([]);
       return;
     }
 
-    // Determine how many steps to process per "tick" based on speed
-    // If speed > 90, process multiple steps to make it feel super fast
-    const stepsToProcess = speed > 90 ? Math.floor((speed - 85) / 2) : 1;
+    const currentSpeed = speedRef.current;
+    const stepsToProcess = currentSpeed > 90 ? Math.floor((currentSpeed - 85) / 2) : 1;
     
     for (let k = 0; k < stepsToProcess; k++) {
       const step = animationsRef.current.shift();
@@ -71,7 +84,10 @@ export const useSorting = ({
           return newArray;
         });
       } else if (step.type === 'sorted') {
-        setSorted(prev => [...prev, ...step.indices]);
+        setSorted(prev => {
+          const newSet = new Set([...prev, ...step.indices]);
+          return Array.from(newSet);
+        });
         setComparing([]);
         setSwapping([]);
       } else if (step.type === 'overwrite') {
@@ -90,27 +106,19 @@ export const useSorting = ({
       }
     }
 
-    // Faster interval: translate 1-100 to 100ms - 1ms
-    const delay = Math.max(1, 101 - speed);
-    timeoutIdRef.current = setTimeout(playAnimations, delay);
-  }, [speed]);
+    const delay = Math.max(1, 101 - currentSpeed);
+    if (isRunningRef.current) {
+      timeoutIdRef.current = setTimeout(playAnimations, delay);
+    }
+  }, []);
 
   const startSorting = useCallback((animations: AnimationStep[]) => {
-    if (isRunning) return;
+    if (isRunningRef.current) return;
     animationsRef.current = animations;
+    isRunningRef.current = true;
     setIsRunning(true);
     playAnimations();
-  }, [isRunning, playAnimations]);
-
-  const stopSorting = useCallback(() => {
-    if (timeoutIdRef.current) {
-      clearTimeout(timeoutIdRef.current);
-    }
-    setIsRunning(false);
-    setComparing([]);
-    setSwapping([]);
-    animationsRef.current = [];
-  }, []);
+  }, [playAnimations]);
 
   return {
     array,
