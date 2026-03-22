@@ -74,6 +74,19 @@ export const useSorting = ({
         setSorted(prev => [...prev, ...step.indices]);
         setComparing([]);
         setSwapping([]);
+      } else if (step.type === 'overwrite') {
+        setSwapping(step.indices);
+        setComparing([]);
+        
+        const [idx] = step.indices;
+        const { value } = step;
+        if (value !== undefined) {
+          setArray(prevArray => {
+            const newArray = [...prevArray];
+            newArray[idx] = value;
+            return newArray;
+          });
+        }
       }
     }
 

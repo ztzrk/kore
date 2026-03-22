@@ -1,4 +1,4 @@
-export type AnimationType = 'compare' | 'swap' | 'sorted';
+export type AnimationType = 'compare' | 'swap' | 'sorted' | 'overwrite';
 
 export interface AnimationStep {
   type: AnimationType;

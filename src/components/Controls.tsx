@@ -101,9 +101,29 @@ const Controls: React.FC<ControlsProps> = ({
           disabled={isRunning}
           className="bg-zinc-800 text-zinc-200 text-sm px-4 py-2 rounded-lg border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all appearance-none cursor-pointer"
         >
-          <option value="Bubble Sort">Bubble Sort</option>
-          <option value="Quick Sort">Quick Sort</option>
-          <option value="Selection Sort" disabled>Selection Sort (Soon)</option>
+          <optgroup label="Simple Sorts">
+            <option value="Bubble Sort">Bubble Sort</option>
+            <option value="Selection Sort">Selection Sort</option>
+            <option value="Insertion Sort">Insertion Sort</option>
+          </optgroup>
+          <optgroup label="Efficient Sorts">
+            <option value="Quick Sort">Quick Sort</option>
+            <option value="Merge Sort">Merge Sort</option>
+            <option value="Heap Sort">Heap Sort</option>
+          </optgroup>
+          <optgroup label="Distribution Sorts">
+            <option value="Counting Sort">Counting Sort</option>
+            <option value="Radix Sort">Radix Sort</option>
+            <option value="Bucket Sort">Bucket Sort</option>
+          </optgroup>
+          <optgroup label="Exotic Sorts">
+            <option value="Shell Sort">Shell Sort</option>
+            <option value="Cocktail Shaker Sort">Cocktail Shaker Sort</option>
+            <option value="Comb Sort">Comb Sort</option>
+          </optgroup>
+          <optgroup label="Fun Sorts">
+            <option value="Bogo Sort">Bogo Sort</option>
+          </optgroup>
         </select>
       </div>
     </div>

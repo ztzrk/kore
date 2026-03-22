@@ -7,6 +7,17 @@ import { useSorting } from '@/hooks/useSorting';
 import { AnimationStep } from '@/types/sorting';
 import { bubbleSort } from '@/utils/algorithms/bubbleSort';
 import { quickSort } from '@/utils/algorithms/quickSort';
+import { selectionSort } from '@/utils/algorithms/selectionSort';
+import { insertionSort } from '@/utils/algorithms/insertionSort';
+import { mergeSort } from '@/utils/algorithms/mergeSort';
+import { heapSort } from '@/utils/algorithms/heapSort';
+import { shellSort } from '@/utils/algorithms/shellSort';
+import { cocktailShakerSort } from '@/utils/algorithms/cocktailShakerSort';
+import { combSort } from '@/utils/algorithms/combSort';
+import { countingSort } from '@/utils/algorithms/countingSort';
+import { radixSort } from '@/utils/algorithms/radixSort';
+import { bucketSort } from '@/utils/algorithms/bucketSort';
+import { bogoSort } from '@/utils/algorithms/bogoSort';
 
 export default function Home() {
   const [size, setSize] = useState(60);
@@ -31,13 +42,26 @@ export default function Home() {
   }, [size, resetArray]);
 
   const handleStart = () => {
-    let animations: AnimationStep[] = [];
-    if (algorithm === 'Bubble Sort') {
-      animations = bubbleSort([...array]);
-    } else if (algorithm === 'Quick Sort') {
-      animations = quickSort([...array]);
+    const algorithms: Record<string, (arr: number[]) => AnimationStep[]> = {
+      'Bubble Sort': bubbleSort,
+      'Quick Sort': quickSort,
+      'Selection Sort': selectionSort,
+      'Insertion Sort': insertionSort,
+      'Merge Sort': mergeSort,
+      'Heap Sort': heapSort,
+      'Shell Sort': shellSort,
+      'Cocktail Shaker Sort': cocktailShakerSort,
+      'Comb Sort': combSort,
+      'Counting Sort': countingSort,
+      'Radix Sort': radixSort,
+      'Bucket Sort': bucketSort,
+      'Bogo Sort': bogoSort,
+    };
+
+    if (algorithms[algorithm]) {
+      const animations = algorithms[algorithm]([...array]);
+      startSorting(animations);
     }
-    startSorting(animations);
   };
 
   return (
