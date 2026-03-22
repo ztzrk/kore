@@ -18,6 +18,8 @@ import { countingSort } from '@/utils/algorithms/countingSort';
 import { radixSort } from '@/utils/algorithms/radixSort';
 import { bucketSort } from '@/utils/algorithms/bucketSort';
 import { bogoSort } from '@/utils/algorithms/bogoSort';
+import { algorithmsData } from '@/data/algorithms';
+import AlgorithmInfo from '@/components/AlgorithmInfo';
 
 export default function Home() {
   const [size, setSize] = useState(60);
@@ -67,7 +69,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center selection:bg-indigo-500/30">
       {/* Header */}
-      <header className="w-full py-8 text-center bg-zinc-950/50 border-b border-zinc-900/50 backdrop-blur-sm z-10">
+      <header className="w-full py-4 text-center bg-zinc-950/50 border-b border-zinc-900/50 backdrop-blur-sm z-10">
         <h1 className="text-4xl font-extrabold tracking-tighter bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent italic">
           KORE
         </h1>
@@ -77,7 +79,7 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 w-full max-w-7xl flex flex-col items-center justify-center gap-12 p-8">
+      <div className="flex-1 w-full max-w-7xl flex flex-col items-center justify-center gap-6 p-6">
         <Visualizer
           array={array}
           comparing={comparing}
@@ -97,10 +99,14 @@ export default function Home() {
           algorithm={algorithm}
           onAlgorithmChange={setAlgorithm}
         />
+
+        {algorithmsData[algorithm] && (
+          <AlgorithmInfo data={algorithmsData[algorithm]} />
+        )}
       </div>
 
       {/* Footer / Info */}
-      <footer className="w-full py-6 text-center text-[10px] text-zinc-600 uppercase tracking-widest font-bold">
+      <footer className="w-full py-3 text-center text-[10px] text-zinc-600 uppercase tracking-widest font-bold">
         Built with Next.js & React &bull; 2026
       </footer>
     </main>

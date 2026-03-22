@@ -18,7 +18,7 @@ const Visualizer: React.FC<VisualizerProps> = ({
   const maxVal = Math.max(...array, 1);
 
   return (
-    <div className="flex items-end justify-center w-full h-[60vh] gap-1 px-4 overflow-hidden">
+    <div className="flex items-end justify-center w-full h-[45vh] gap-1 px-4 overflow-hidden">
       {array.map((value, idx) => {
         let barColor = 'bg-zinc-700'; // Default
         
